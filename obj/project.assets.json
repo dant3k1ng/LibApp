@@ -8734,11 +8734,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\dant3_k1ng\\Source\\Repos\\LibApp\\LibApp.csproj",
+      "projectUniqueName": "C:\\Users\\dant3_k1ng\\source\\repos\\LibApp\\LibApp.csproj",
       "projectName": "LibApp",
-      "projectPath": "C:\\Users\\dant3_k1ng\\Source\\Repos\\LibApp\\LibApp.csproj",
+      "projectPath": "C:\\Users\\dant3_k1ng\\source\\repos\\LibApp\\LibApp.csproj",
       "packagesPath": "C:\\Users\\dant3_k1ng\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\dant3_k1ng\\Source\\Repos\\LibApp\\obj\\",
+      "outputPath": "C:\\Users\\dant3_k1ng\\source\\repos\\LibApp\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "D:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",

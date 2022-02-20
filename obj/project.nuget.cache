@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "d+rUQQZP9H42hJFwaZ+tUh+SP2R5BOdkYsEJRZMg0uLScAJql1J/1sy0tLLzcMT2TwZyYOAqcWRFxBX88MtzTg==",
+  "dgSpecHash": "BPIQkWNu4DIeKjNuguMV0iOq+IAWMU7x/5zCygtX1nj18WKzMT0LMVlJiYZU5POXgTuXsSsW3ib5bITciq+h/g==",
   "success": true,
-  "projectFilePath": "C:\\Users\\dant3_k1ng\\Source\\Repos\\LibApp\\LibApp.csproj",
+  "projectFilePath": "C:\\Users\\dant3_k1ng\\source\\repos\\LibApp\\LibApp.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\dant3_k1ng\\.nuget\\packages\\automapper\\10.1.1\\automapper.10.1.1.nupkg.sha512",
     "C:\\Users\\dant3_k1ng\\.nuget\\packages\\automapper.extensions.microsoft.dependencyinjection\\8.1.1\\automapper.extensions.microsoft.dependencyinjection.8.1.1.nupkg.sha512",
