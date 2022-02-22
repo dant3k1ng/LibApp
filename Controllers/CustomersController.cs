@@ -5,6 +5,7 @@ using LibApp.ViewModels;
 using Microsoft.EntityFrameworkCore;
 using LibApp.Models;
 using System;
+using Microsoft.AspNetCore.Authorization;
 
 namespace LibApp.Controllers
 {
@@ -17,11 +18,13 @@ namespace LibApp.Controllers
             _context = context;
         }
 
+        [Authorize(Roles = "StoreManager,Owner")]
         public ViewResult Index()
         {            
             return View();
         }
 
+        [Authorize(Roles = "StoreManager,Owner")]
         public IActionResult Details(int id)
         {
             var customer = _context.Customers
@@ -36,6 +39,7 @@ namespace LibApp.Controllers
             return View(customer);
         }
 
+        [Authorize(Roles = "Owner")]
         public IActionResult New()
         {
             var membershipTypes = _context.MembershipTypes.ToList();
@@ -48,6 +52,7 @@ namespace LibApp.Controllers
             return View("CustomerForm", viewModel);
         }
 
+        [Authorize(Roles = "Owner")]
         public IActionResult Edit(int id)
         {
             var customer = _context.Customers.SingleOrDefault(c => c.Id == id);
@@ -66,6 +71,7 @@ namespace LibApp.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Owner")]
         public IActionResult Save(Customer customer)
         {
             if (!ModelState.IsValid)

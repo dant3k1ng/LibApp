@@ -34,22 +34,24 @@ namespace LibApp.Controllers.Api
         [HttpGet]
         public IActionResult GetCustomers(string query = null)
         {
-            IEnumerable<Customer> customerQuery = _context.Customers
-                                .Include(c => c.MembershipType)
-                                .ToList();
+            IEnumerable<Customer> customersQuery = _context.Customers
+                                .Include(c => c.MembershipType);
+                                
 
             if (!String.IsNullOrWhiteSpace(query))
             {
-                customerQuery = customerQuery.Where(c => c.Name.Contains(query));
+                customersQuery = customersQuery.Where(c => c.Name.Contains(query));
             }
 
-            var customerDtos = customerQuery.Select(_mapper.Map<Customer, CustomerDto>);
+            var customerDtos = customersQuery
+                .ToList()
+                .Select(_mapper.Map<Customer, CustomerDto>);
 
             return Ok(customerDtos);
         }
 
         // GET /api/customers/{id}
-        [HttpGet("{id}", Name = "GetCustomer")]
+        [HttpGet("{id}")]
         public async Task<IActionResult> GetCustomer(int id)
         {
             Console.WriteLine("START");
@@ -58,7 +60,7 @@ namespace LibApp.Controllers.Api
 
             if (customer == null)
             {
-                throw new HttpResponseException(HttpStatusCode.NotFound);
+                throw new HttpResponseException(System.Net.HttpStatusCode.NotFound);
             }
             
             Console.WriteLine("END");
@@ -68,11 +70,12 @@ namespace LibApp.Controllers.Api
 
         // POST /api/customers
         [HttpPost]
-        public IActionResult CreateCustomer(CustomerDto customerDto)
+        [Authorize(Roles = "Owner")]
+        public CustomerDto CreateCustomer(CustomerDto customerDto)
         {
             if (!ModelState.IsValid)
             {
-                return BadRequest();
+                throw new HttpResponseException(System.Net.HttpStatusCode.BadRequest);
             }
 
             var customer = _mapper.Map<Customer>(customerDto);
@@ -80,18 +83,21 @@ namespace LibApp.Controllers.Api
             _context.SaveChanges();
             customerDto.Id = customer.Id;
 
-            return CreatedAtRoute(nameof(GetCustomer), new { id = customerDto.Id }, customerDto);
+            return customerDto;
         }
 
         // PUT /api/customers/{id}
         [HttpPut("{id}")]
+        [Authorize(Roles = "Owner")]
         public void UpdateCustomer(int id, CustomerDto customerDto)
         {
-            var customerInDb = _context.Customers.SingleOrDefault(c => c.Id == id);
+
+            if (!ModelState.IsValid)
+                throw new HttpResponseException(System.Net.HttpStatusCode.BadRequest);
+
+            var customerInDb = _context.Customers.SingleOrDefault(c => c.Id == customerDto.Id);
             if (customerInDb == null)
-            {
-                throw new HttpResponseException(HttpStatusCode.NotFound);
-            }
+                throw new HttpResponseException(System.Net.HttpStatusCode.NotFound);
 
             _mapper.Map(customerDto, customerInDb);
             _context.SaveChanges();
@@ -99,13 +105,12 @@ namespace LibApp.Controllers.Api
 
         // DELETE /api/customers/{id}
         [HttpDelete("{id}")]
+        [Authorize(Roles = "Owner")]
         public void DeleteCustomer(int id)
         {
             var customerInDb = _context.Customers.SingleOrDefault(c => c.Id == id);
             if (customerInDb == null)
-            {
-                throw new HttpResponseException(HttpStatusCode.NotFound);
-            }
+                throw new HttpResponseException(System.Net.HttpStatusCode.NotFound);
 
             _context.Customers.Remove(customerInDb);
             _context.SaveChanges();

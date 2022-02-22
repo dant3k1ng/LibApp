@@ -1,9 +1,12 @@
+@using Microsoft.AspNetCore.Identity
 @model LibApp.Models.Customer
 
 @{
     ViewBag.Title = Model.Name;
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+
+@inject UserManager<IdentityUser> UserManager
 
 <h2>@Model.Name</h2>
 <ul>
@@ -12,4 +15,10 @@
     {
         <li>Birthdate: @Model.Birthdate.Value.ToShortDateString()</li>
     }
+    <li>@Model.HasNewsletterSubscribed</li>
 </ul>
+
+@if (User.IsInRole("StoreManager") || User.IsInRole("Owner"))
+{
+    <a href="/customers/edit/@Model.Id" class="btn btn-primary">Edit</a>
+}
